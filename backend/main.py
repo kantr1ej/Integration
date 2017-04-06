@@ -54,7 +54,7 @@ def run_program():
             back.switchBlock()
 
         if swc[4]:
-            back.switchBlock()
+            back.switchEnd()
             complete += 1
 
         else:
