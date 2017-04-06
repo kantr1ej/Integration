@@ -190,6 +190,10 @@ class Back(object):
             motorOff
         if swc[1] != 1 and motorState = 0
             motorOn
+                              
+    def switchEnd(self):
+        motorOff
+        ledBlink
 
     def trayError(self, filled, complete):
         if filled != complete:
