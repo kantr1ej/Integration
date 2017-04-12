@@ -37,24 +37,44 @@ capped = 0
 block = 0
 complete = 0
 
+def switchFill():
+    back.motorOff()
+    print 'filling'
+   # back.filling()
+    sleep(4)
+    print 'filled, starting back up'
+    back.motorOn()
+
+def switchBlock():
+    back.ledBlink
+    sleep(5)
+    if swc[1]:
+        back,motorOff()
+    if swc[1] != 1 and motorState == 0:
+        back.motorOn()
+
+def switchEnd():
+    back.ledBlink
+    back.motorOff
+
 def run_program():
     while 1:
-        if swc[0]:
-            back.switchFill()
+        if swc[0] == 0:
+            switchFill()
             filled += 1
         
-        if swc[1]:
-            back.switchBlock()
+        if swc[1] == 0:
+            switchBlock()
             
-        if swc[2]:
+        if swc[2] == 0:
             #capping
             capped += 1
 
-        if swc[3]:
-            back.switchBlock()
+        if swc[3] == 0:
+            switchBlock()
 
-        if swc[4]:
-            back.switchEnd()
+        if swc[4] == 0:
+            switchEnd()
             complete += 1
 
         else:
@@ -70,6 +90,7 @@ def exit_gracefully(signum, frame):
     try:
         if raw_input("\nReally quit? (y/n) ").lower().startswith('y'):
             back.motorOff()
+	    print complete
             sys.exit(1)
 
     except KeyboardInterrupt:
@@ -85,3 +106,5 @@ if __name__ == '__main__':
     original_sigint = signal.getsignal(signal.SIGINT)
     signal.signal(signal.SIGINT, exit_gracefully)
     run_program()
+
+

@@ -21,7 +21,7 @@
 
 
 # these imports are for controlling the GPIO pins and pwm
-import RPi.GPIO as GPIO
+import RPi.GPIO as gpio
 import wiringpi
 from time import sleep
 
@@ -92,7 +92,7 @@ class Back(object):
 
     # turns motor on instantly at 60%
     def motorOn(self):
-        wiringpi.pwmWrite(18, 600)
+        wiringpi.pwmWrite(18, 800)
         motorState = 1
 
     # stops motor on instantly
@@ -115,7 +115,7 @@ class Back(object):
     # ramps motor up from off to 60% with 10% increments
     def motorRampUp(self):
         for i in range(o, 600, 10):
-            wiringpi.pwmWrite(18, i
+            wiringpi.pwmWrite(18, i)
 
     # takes in argument n for speed control 0 <= n <= 1000
     def motorSpeed(self, n):
@@ -147,7 +147,7 @@ class Back(object):
         state = state.lower()
         if state == "on":
             ledOn = gpio.output(24, 1)      # led on
-        if state == "off"
+        if state == "off":
             ledOff = gpio.output(24, 0)     # led off
 
     def ledBlink(self):
@@ -164,36 +164,27 @@ class Back(object):
 
         duration = 4
 
-        wand1.write(ON)
-        wand2.write(ON)
-        wand3.write(ON)
-        wand4.write(ON)
-        wand5.write(ON)
+        wand1 = gpio.setup(5, gpio.OUT)
+        wand2 = gpio.setup(6, gpio.OUT)
+        wand3 = gpio.setup(16,gpio.OUT)
+        wand4 = gpio.setup(25,gpio.OUT)
+        wand5 = gpio.setup(26, gpio.OUT)
 
+       # wand1.write(ON)
+       # wand2.write(ON)
+       # wand3.write(ON)
+       # wand4.write(ON)
+       # wand5.write(ON)
+	
+	
         sleep(duration)
 
-        wand1.write(OFF)
-        wand2.write(OFF)
-        wand3.write(OFF)
-        wand4.write(OFF)
-        wand5.write(OFF)
+       # wand1.write(OFF)
+       # wand2.write(OFF)
+       # wand3.write(OFF)
+       # wand4.write(OFF)
+       # wand5.write(OFF)
 
-    def switchFill(self):
-        motorOff
-        filling
-        motorOn
-
-    def switchBlock(self):
-        ledBlink
-        sleep(5)
-        if swc[1]:
-            motorOff
-        if swc[1] != 1 and motorState = 0
-            motorOn
-                              
-    def switchEnd(self):
-        motorOff
-        ledBlink
 
     def trayError(self, filled, complete):
         if filled != complete:
