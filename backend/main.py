@@ -6,12 +6,12 @@
 # Control GPIO pins
 #   M1 | S0 | S1 | S2 | S3 | S4 |
 # | 12 | 07 | 11 | 13 | 15 | 16 |  Board Val
-# | 18 | 04 | 17 | 22 | 23 | 27 |  BCM Val
+# | 18 | 04 | 17 | 27 | 22 | 23 |  BCM Val
 
 # filling GPIO pins
 # | W0 | W1 | W2 | W3 | W4 |
 # | 22 | 29 | 31 | 36 | 37 |  Board Val
-# | 05 | 06 | 16 | 25 | 26 |  BCM Val
+# | 25 | 05 | 06 | 16 | 26 |  BCM Val
 
 # possible LED indicator
 # | L0 |
@@ -38,9 +38,10 @@ block = 0
 complete = 0
 
 def switchFill():
+    sleep(2.65)
     back.motorOff()
     print 'filling'
-   # back.filling()
+    # back.filling()            ##commented until we get a chance to test it
     sleep(4)
     print 'filled, starting back up'
     back.motorOn()
@@ -62,16 +63,20 @@ def run_program():
         if swc[0] == 0:
             switchFill()
             filled += 1
-        
+
         if swc[1] == 0:
-            switchBlock()
-            
+            ## logic for dealing with a block in the line
+            ## would go here
+            # switchBlock()
+
         if swc[2] == 0:
             #capping
             capped += 1
 
         if swc[3] == 0:
-            switchBlock()
+            ## logic for dealing with a block in the line
+            ## would go here
+            # switchBlock()
 
         if swc[4] == 0:
             switchEnd()
@@ -106,5 +111,3 @@ if __name__ == '__main__':
     original_sigint = signal.getsignal(signal.SIGINT)
     signal.signal(signal.SIGINT, exit_gracefully)
     run_program()
-
-

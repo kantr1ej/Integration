@@ -31,14 +31,14 @@ back = Back()
 
 #swc = [gpio.input(4), gpio.input(17), gpio.input(22), gpio.input(23), gpio.input(27)]
 
-
+x = 0
 
 def run_program():
-    
-    print " .   .   .   .    .###.. .   .   .   . "   
+
+    print " .   .   .   .    .###.. .   .   .   . "
     sleep(0.25)
     print " .   .   . ..... .#####..... .   .   . "
-    print " .   .   . ..##~.?#####Z..##...  .   . "   
+    print " .   .   . ..##~.?#####Z..##...  .   . "
     sleep(0.25)
     print " .   .   ....###O.#####.####:..  .   . "
     print " .   .   . ..#####,###.#####=..  .   . "
@@ -47,18 +47,18 @@ def run_program():
     print " .   ..I####D,.#####~#####~.D####O.  . "
     sleep(0.25)
     print " .   ...########.###.###.O#######... . "
-    print " .   ...+#######O~I#,#Z~########7..  . "  
+    print " .   ...+#######O~I#,#Z~########7..  . "
     sleep(0.25)
-    print " .   ....=#########,O=O########?..   . " 
-    print " .   ......########D.O########....   . "  
+    print " .   ....=#########,O=O########?..   . "
+    print " .   ......########D.O########....   . "
     sleep(0.25)
     print " .   .   ... =#############+...  .   . "
     print " .   .   .   .....#####.......   .   . "
     sleep(0.25)
     print " .   .   .     ....###....   .   .   . "
-    print " .   .   .   .   ..###....   .   .   . "  
+    print " .   .   .   .   ..###....   .   .   . "
     sleep(0.25)
-    print " .   .   .   .   ..### ...   .   .   . " 
+    print " .   .   .   .   ..### ...   .   .   . "
     print " .   .   .   .   ..### ...   .   .   . "
     sleep(0.25)
     print " .   .   .   .   ..### ...   .   .   . "
@@ -86,9 +86,7 @@ def run_program():
 
     while 1:
         swc = [gpio.input(4), gpio.input(17), gpio.input(22), gpio.input(23), gpio.input(27)]
-        x = 0
 
-        
         if swc[0] == 0:
             if x == 0:
                 print "\rswitch 1 Pressed"
@@ -96,11 +94,10 @@ def run_program():
                 x = 1
             else:
                 x = 1
-            
-        
+
         elif swc[1] == 0:
             print "switch 2 Pressed"
-            
+
         elif swc[2] == 0:
             print "switch 3 Pressed"
 
@@ -119,9 +116,6 @@ def run_program():
             print "switches read as: ", swc
             sleep(1)
             x = 0
-
-        
-
 
 def exit_gracefully(signum, frame):
     # restore the original signal handler as otherwise evil things will happen
@@ -146,4 +140,3 @@ if __name__ == '__main__':
     original_sigint = signal.getsignal(signal.SIGINT)
     signal.signal(signal.SIGINT, exit_gracefully)
     run_program()
-

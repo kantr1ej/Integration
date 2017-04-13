@@ -29,8 +29,6 @@ class Back(object):
 
     def __init__(self):
 
-
-
         # setting up the GPIO settings for the pwm
         wiringpi.wiringPiSetupGpio()
         wiringpi.pinMode(18, wiringpi.GPIO.PWM_OUTPUT)
@@ -72,11 +70,11 @@ class Back(object):
         motorState = 1          #Motor on initially
 
         # initialization for filling
-        wand1 = gpio.setup(5, gpio.OUT)
-        wand2 = gpio.setup(6, gpio.OUT)
-        wand3 = gpio.setup(16,gpio.OUT)
-        wand4 = gpio.setup(25,gpio.OUT)
-        wand5 = gpio.setup(26, gpio.OUT)
+        gpio.setup(5, gpio.OUT)
+        gpio.setup(6, gpio.OUT)
+        gpio.setup(16,gpio.OUT)
+        gpio.setup(25,gpio.OUT)
+        gpio.setup(26, gpio.OUT)
 
 ########################END OF __INIT__########################
 
@@ -95,6 +93,10 @@ class Back(object):
         wiringpi.pwmWrite(18, 800)
         motorState = 1
 
+    def Motor(self, pin, speed):
+        wiringpi.pwmWrite(pin, speed)
+        motorState = 1
+
     # stops motor on instantly
     def motorOff(self):
         wiringpi.pwmWrite(18, 0)
@@ -109,12 +111,12 @@ class Back(object):
 
     # ramps motor down from 60% to off with 10% increments
     def motorRampDown(self):
-        for i in range(600, 0, 10):
+        for i in range(800, 0, 10):
             wiringpi.pwmWrite(18, i)
 
     # ramps motor up from off to 60% with 10% increments
     def motorRampUp(self):
-        for i in range(o, 600, 10):
+        for i in range(o, 800, 10):
             wiringpi.pwmWrite(18, i)
 
     # takes in argument n for speed control 0 <= n <= 1000
@@ -138,7 +140,6 @@ class Back(object):
     #     5:gpio.setup(27, gpio.IN, pull_up_down=gpio.PUD_UP)
     #     }
 
-
     ## this is mostly for testing, but an indicator LED can be used
     ## in final release
     # function to control an LED, it takes in the state to change
@@ -159,31 +160,26 @@ class Back(object):
         gpio.output(24, 1)
 
     def filling(self):
+        ## Are these setup backwards because of Mraa
+        ## or another reason?
         ON = 0
         OFF = 1
 
         duration = 4
 
-        wand1 = gpio.setup(5, gpio.OUT)
-        wand2 = gpio.setup(6, gpio.OUT)
-        wand3 = gpio.setup(16,gpio.OUT)
-        wand4 = gpio.setup(25,gpio.OUT)
-        wand5 = gpio.setup(26, gpio.OUT)
+        gpio.output(5, ON)
+        gpio.output(6, ON)
+        gpio.output(16, ON)
+        gpio.output(25, ON)
+        gpio.output(26, ON)
 
-       # wand1.write(ON)
-       # wand2.write(ON)
-       # wand3.write(ON)
-       # wand4.write(ON)
-       # wand5.write(ON)
-	
-	
         sleep(duration)
 
-       # wand1.write(OFF)
-       # wand2.write(OFF)
-       # wand3.write(OFF)
-       # wand4.write(OFF)
-       # wand5.write(OFF)
+        gpio.output(5, OFF)
+        gpio.output(6, OFF)
+        gpio.output(16, OFF)
+        gpio.output(25, OFF)
+        gpio.output(26, OFF)
 
 
     def trayError(self, filled, complete):
