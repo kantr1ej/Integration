@@ -27,67 +27,46 @@ from time import sleep
 
 back = Back()
 
-# swc = {0:gpio.input(4), 1:gpio.input(17), 2:gpio.input(22)
-# , 3:gpio.input(23), 4:gpio.input(27)}
 
-
-
-def switchFill():
-    sleep(2.65)
-    back.motorOff()
-    print 'filling'
-    # back.filling()            ##commented until we get a chance to test it
-    sleep(4)
-    print 'filled, starting back up'
-    back.motorOn()
-
-def switchBlock():
-    back.ledBlink
-    sleep(5)
-    if swc[1]:
-        back,motorOff()
-    if swc[1] != 1 and motorState == 0:
-        back.motorOn()
 
 def switchEnd():
-    back.ledBlink
+    # back.ledBlink
     back.motorOff
+    print "TRIGGER WARNING:  End switch triggered"
 
 def run_program():
-    motorState = 1             # motor on initially
-    filled = 0
-    capped = 0
-    block = 0
-    complete = 0
-
     while 1:
         if gpio.input(4):
-            switchFill()
-            filled += 1
+            # switchFill()
+            print "TRIGGER WARNING:  Filling switch triggered"
+            sleep(2.65)
+            back.motorOff()
+            sleep(4)
 
-        if swc[1] == 0:
-            ## logic for dealing with a block in the line
-            ## would go here
-            # switchBlock()
-
-        if swc[2] == 0:
-            #capping
-            capped += 1
-
-        if swc[3] == 0:
-            ## logic for dealing with a block in the line
-            ## would go here
-            # switchBlock()
-
-        if swc[4] == 0:
-            switchEnd()
-            complete += 1
+        # if swc[1] == 0:
+        #     ## logic for dealing with a block in the line
+        #     ## would go here
+        #     # switchBlock()
+        #
+        # if swc[2] == 0:
+        #     #capping
+        #     capped += 1
+        #
+        # if swc[3] == 0:
+        #     ## logic for dealing with a block in the line
+        #     ## would go here
+        #     # switchBlock()
+        #
+        # if swc[4] == 0:
+        #     switchEnd()
+        #     complete += 1
 
         else:
             back.motorOn()
+            print "running"
+            sleep(0.1)
 
-    # return (filled, capped, complete)
-    print filled, capped, complete
+        # return (filled, capped, complete)
 
 def exit_gracefully(signum, frame):
     # restore the original signal handler as otherwise evil things will happen
@@ -97,7 +76,6 @@ def exit_gracefully(signum, frame):
     try:
         if raw_input("\nReally quit? (y/n) ").lower().startswith('y'):
             back.motorOff()
-	    print complete
             sys.exit(1)
 
     except KeyboardInterrupt:
